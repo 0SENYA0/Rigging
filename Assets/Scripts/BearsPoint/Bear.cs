@@ -1,16 +1,16 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace DefaultNamespace
+namespace BearsPoint
 {
 	public class Bear : MonoBehaviour
 	{
-		[SerializeField] private List<Rigidbody> _riggingRigidbody;
-		[SerializeField] private List<Collider> _riggingColliders;
-
+		[SerializeField] private Ragdoll _ragdoll;
 		[SerializeField] private Animator _animator;
 		[SerializeField] private BoxCollider _boxCollider;
+		
+		// Для объяснения в послднем пункте документа
+		private CharacterJoint _joint;
+		private ConfigurableJoint _configurableJoint;
 
 		private void Awake() =>
 			DisableRigging();
@@ -19,24 +19,14 @@ namespace DefaultNamespace
 		{
 			_animator.enabled = false;
 			_boxCollider.enabled = false;
-
-			foreach (Rigidbody rigidbody in _riggingRigidbody)
-				rigidbody.isKinematic = false;
-			
-			foreach (Collider collider in _riggingColliders)
-				collider.enabled = true;
+			_ragdoll.EnableRigging();
 		}
 
 		public void DisableRigging()
 		{
 			_animator.enabled = true;
 			_boxCollider.enabled = true;
-
-			foreach (Rigidbody rigidbody in _riggingRigidbody)
-				rigidbody.isKinematic = true;
-			
-			foreach (Collider collider in _riggingColliders)
-				collider.enabled = false;
+			_ragdoll.DisableRigging();
 		}
 	}
 }

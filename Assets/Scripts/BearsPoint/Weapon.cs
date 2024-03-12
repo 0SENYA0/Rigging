@@ -9,9 +9,7 @@ namespace DefaultNamespace
 	    private void Update()
 	    {
 	        if(Input.GetKeyDown(KeyCode.Space))
-	        {
-	        	Shoot();
-	        }
+		        Shoot();
 	    }
 	    
 	    private void Shoot()

@@ -1,19 +1,15 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnimationToRigging : MonoBehaviour
+/// <summary>
+/// Оставил нетронутым так как это первая работа с рэегдолом
+/// </summary>
+public class AnimationToRagdoll : MonoBehaviour
 {
 	[SerializeField] private List<Rigidbody> _rigidbodies;
 	[SerializeField] private Animator _animator;
 
 	private bool _isRigging;
-
-	// TODO второй вариает получения _rigidbodies
-	// private void Awake()
-	// {
-	//      _rigidbodies = GetComponentsInChildren<Rigidbody>();
-	// }
 
 	private void Start() =>
 		DisableRagdoll();
@@ -30,25 +26,23 @@ public class AnimationToRigging : MonoBehaviour
 	private void ChangePersonState()
 	{
 		if (_isRigging)
-		{
 			EnableRagdoll();
-			_animator.enabled = false;
-		}
 		else
-		{
 			DisableRagdoll();
-			_animator.enabled = true;
-		}
 	}
 
 	private void DisableRagdoll()
 	{
+		_animator.enabled = false;
+
 		foreach (Rigidbody rigidbody in _rigidbodies)
 			rigidbody.isKinematic = true;
 	}
 
 	private void EnableRagdoll()
 	{
+		_animator.enabled = true;
+		
 		foreach (Rigidbody rigidbody in _rigidbodies)
 			rigidbody.isKinematic = false;
 	}

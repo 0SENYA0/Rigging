@@ -1,12 +1,16 @@
 using System.Collections;
+using BearsPoint;
 using UnityEngine;
 
 namespace DefaultNamespace
 {
 	public class Bullet : MonoBehaviour
 	{
+		private const float MaxTime = 60; 
+		
 		[SerializeField] private float _speed;
 		[SerializeField] private Rigidbody _rigidbody;
+		
 		private Vector3 _direction;
 		private bool _canMove = true;
 
@@ -28,9 +32,16 @@ namespace DefaultNamespace
 
 		private IEnumerator MoveCoroutine()
 		{
+			float timer = 0;
+
 			while (_canMove)
 			{
 				_rigidbody.velocity = _direction * (_speed * Time.deltaTime);
+				timer += (1 * Time.deltaTime);
+				
+				if (timer >= MaxTime)
+					_canMove = false;
+				
 				yield return null;
 			}
 		}
