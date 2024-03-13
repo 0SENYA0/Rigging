@@ -1,8 +1,7 @@
 using System.Collections;
-using BearsPoint;
 using UnityEngine;
 
-namespace DefaultNamespace
+namespace BearsPoint
 {
 	public class Bullet : MonoBehaviour
 	{
@@ -19,31 +18,33 @@ namespace DefaultNamespace
 			if (collision.collider.TryGetComponent(out Bear bear) == false)
 				return;
 
-			bear.EnableRigging();
+			bear.EnableRagdoll();
 			_canMove = false;
 			gameObject.SetActive(false);
 		}
 
-		public void Move(Vector3 direction)
+		public void Initialize(Vector3 direction)
 		{
 			_direction = direction.normalized;
-			StartCoroutine(MoveCoroutine());
+			StartCoroutine(Move());
 		}
 
-		private IEnumerator MoveCoroutine()
+		private IEnumerator Move()
 		{
 			float timer = 0;
 
 			while (_canMove)
 			{
 				_rigidbody.velocity = _direction * (_speed * Time.deltaTime);
-				timer += (1 * Time.deltaTime);
+				timer *= Time.deltaTime;
 				
 				if (timer >= MaxTime)
 					_canMove = false;
 				
 				yield return null;
 			}
+			
+			gameObject.SetActive(false);
 		}
 	}
 }

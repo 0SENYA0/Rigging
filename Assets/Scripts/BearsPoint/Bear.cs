@@ -8,25 +8,21 @@ namespace BearsPoint
 		[SerializeField] private Animator _animator;
 		[SerializeField] private BoxCollider _boxCollider;
 		
-		// Для объяснения в послднем пункте документа
-		private CharacterJoint _joint;
-		private ConfigurableJoint _configurableJoint;
-
 		private void Awake() =>
-			DisableRigging();
+			DisableRagdoll();
 
-		public void EnableRigging()
+		public void EnableRagdoll()
 		{
 			_animator.enabled = false;
 			_boxCollider.enabled = false;
-			_ragdoll.EnableRigging();
+			_ragdoll.Enable();
 		}
 
-		public void DisableRigging()
+		public void DisableRagdoll()
 		{
 			_animator.enabled = true;
 			_boxCollider.enabled = true;
-			_ragdoll.DisableRigging();
+			_ragdoll.Disable();
 		}
 	}
 }

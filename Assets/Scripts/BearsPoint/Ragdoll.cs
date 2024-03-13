@@ -10,7 +10,7 @@ namespace BearsPoint
 		[SerializeField] private List<Rigidbody> _rigidbodys;
 		[SerializeField] private List<Collider> _colliders; 
 
-		public void EnableRigging()
+		public void Enable()
 		{
 			foreach (Rigidbody rigidbody in _rigidbodys)
 				rigidbody.isKinematic = false;
@@ -19,7 +19,7 @@ namespace BearsPoint
 				collider.enabled = true;
 		}
 
-		public void DisableRigging()
+		public void Disable()
 		{
 			foreach (Rigidbody rigidbody in _rigidbodys)
 				rigidbody.isKinematic = true;
