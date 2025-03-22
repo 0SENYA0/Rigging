@@ -4,28 +4,20 @@ using System.Collections.Generic;
 
 namespace BearsPoint
 {
-	[Serializable]
-	public class Ragdoll
+	public class Ragdoll : MonoBehaviour
 	{
-		[SerializeField] private List<Rigidbody> _rigidbodys;
-		[SerializeField] private List<Collider> _colliders; 
+		[SerializeField] private Rigidbody[] _rigidbodies;
+		[SerializeField] private Animator _animator;
 
-		public void Enable()
-		{
-			foreach (Rigidbody rigidbody in _rigidbodys)
-				rigidbody.isKinematic = false;
-			
-			foreach (Collider collider in _colliders)
-				collider.enabled = true;
-		}
+		private bool _isActive;
 
-		public void Disable()
+		public void SetActive(bool flag)
 		{
-			foreach (Rigidbody rigidbody in _rigidbodys)
-				rigidbody.isKinematic = true;
-			
-			foreach (Collider collider in _colliders)
-				collider.enabled = false;
+			_isActive = flag;
+			_animator.enabled = !_isActive;
+
+			foreach (Rigidbody rigidbody in _rigidbodies)
+				rigidbody.isKinematic = !_isActive;
 		}
 	}
 }

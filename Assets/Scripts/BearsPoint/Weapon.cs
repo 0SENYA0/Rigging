@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace BearsPoint
@@ -5,18 +6,14 @@ namespace BearsPoint
 	public class Weapon : MonoBehaviour
 	{
 		[SerializeField] private Bullet _bullet;
-		[SerializeField] private Transform _shootPosition;
+		[SerializeField] private Transform _shootPoint;
 
 		private void Update()
-	    {
-	        if(Input.GetKeyDown(KeyCode.Space))
-		        Shoot();
-	    }
-	    
-	    private void Shoot()
-	    {
-		    Bullet bullet = Instantiate(_bullet, _shootPosition.position, Quaternion.identity);
-		    bullet.Initialize(transform.forward);
-	    }
+		{
+			if (Input.GetKeyDown(KeyCode.Space))
+			{
+				Instantiate(_bullet, _shootPoint.transform.position, Quaternion.identity);
+			}
+		}
 	}
 }

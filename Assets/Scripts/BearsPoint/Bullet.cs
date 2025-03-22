@@ -1,50 +1,22 @@
-using System.Collections;
 using UnityEngine;
 
 namespace BearsPoint
 {
 	public class Bullet : MonoBehaviour
 	{
-		private const float MaxTime = 60; 
-		
-		[SerializeField] private float _speed;
 		[SerializeField] private Rigidbody _rigidbody;
+		[SerializeField] private float _speed;
 		
-		private Vector3 _direction;
-		private bool _canMove = true;
+		private void Start() =>
+			_rigidbody.velocity = transform.forward * _speed;
 
-		private void OnCollisionEnter(Collision collision)
+		private void OnCollisionEnter(Collision other)
 		{
-			if (collision.collider.TryGetComponent(out Bear bear) == false)
-				return;
-
-			bear.EnableRagdoll();
-			_canMove = false;
-			gameObject.SetActive(false);
-		}
-
-		public void Initialize(Vector3 direction)
-		{
-			_direction = direction.normalized;
-			StartCoroutine(Move());
-		}
-
-		private IEnumerator Move()
-		{
-			float timer = 0;
-
-			while (_canMove)
+			if (other.collider.TryGetComponent(out Bear bear))
 			{
-				_rigidbody.velocity = _direction * (_speed * Time.deltaTime);
-				timer *= Time.deltaTime;
-				
-				if (timer >= MaxTime)
-					_canMove = false;
-				
-				yield return null;
+				bear.EnableRagdoll();
+				Destroy(gameObject);
 			}
-			
-			gameObject.SetActive(false);
 		}
 	}
 }
